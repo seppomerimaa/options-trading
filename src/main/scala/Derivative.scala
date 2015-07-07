@@ -3,19 +3,15 @@ import scala.math._
  * Created by McFly on 7/5/15.
  */
 trait Derivative {
-  def strike: Long
-  def last: Long
+  val strike: Long
+  val premium: Long
   def profitAt(s: Long): Long
 }
 
-case class CallOption(k: Long, l: Long, premium: Long) extends Derivative {
-  override def strike = k
-  override def last = l
-  override def profitAt(s: Long) = max(0L, k - s) - premium
+case class CallOption(strike: Long, premium: Long) extends Derivative {
+  override def profitAt(spot: Long) = max(0L, strike - spot) - premium
 }
 
-case class PutOption(k: Long, l: Long, premium: Long) extends Derivative {
-  override def strike = k
-  override def last = l
-  override def profitAt(s: Long) = max(0L, s - k) - premium
+case class PutOption(strike: Long, premium: Long) extends Derivative {
+  override def profitAt(spot: Long) = max(0L, spot - strike) - premium
 }

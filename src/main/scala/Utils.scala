@@ -4,4 +4,6 @@
 object Utils {
   val MICROS_IN_DOLLAR = 1000000L
   val MICROS_IN_CENT = MICROS_IN_DOLLAR / 100
+
+  def dollarsToMicros(dollarValue: Double) = (dollarValue * MICROS_IN_DOLLAR).toLong
 }
