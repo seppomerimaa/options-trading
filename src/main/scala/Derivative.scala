@@ -9,9 +9,9 @@ trait Derivative {
 }
 
 case class CallOption(strike: Long, premium: Long) extends Derivative {
-  override def profitAt(spot: Long) = max(0L, strike - spot) - premium
+  override def profitAt(spot: Long) = max(0L, spot - strike) - premium
 }
 
 case class PutOption(strike: Long, premium: Long) extends Derivative {
-  override def profitAt(spot: Long) = max(0L, spot - strike) - premium
+  override def profitAt(spot: Long) = max(0L, strike - spot) - premium
 }

@@ -11,7 +11,7 @@ class StrategyRecommender(optionsChain: String, rawBudget: Double) {
 
   val budget = Utils.dollarsToMicros(rawBudget)
 
-  val lines = Source.fromFile(optionsChain).getLines().map(line => line.split(","))
+  val lines = Source.fromFile("src/main/resources/" + optionsChain).getLines().map(line => line.split(","))
   val derivatives = lines.map(line => {
     if (line(2) == "call") {
       new CallOption(singleOptionToBlock(line(0).toDouble), singleOptionToBlock(line(1).toDouble))
@@ -22,15 +22,13 @@ class StrategyRecommender(optionsChain: String, rawBudget: Double) {
     }
   }).toList
 
-  def recommendBestStrategy(p1Double: Double, p2Double: Double): Strategy = {
+  def getTopTen(p1Double: Double, p2Double: Double): List[String] = {
     val p1 = singleOptionToBlock(p1Double)
     val p2 = singleOptionToBlock(p2Double)
 
     val strategies = Strategy.createAll(p1, p2, budget, derivatives)
-    val strategiesAndSharpes = strategies.zip(strategies.map(strategy => strategy.sharpe))
-    val bestStrategy = strategiesAndSharpes.maxBy({ case (strategy, sharpe) => sharpe})._1
-
-    bestStrategy
+    val strategiesAndSharpes = strategies.zip(strategies.map(strategy => strategy.sharpe)).sortBy({ case (strategy, sharpe) => sharpe}).reverse
+    strategiesAndSharpes.map({ case (strategy, sharpe) => strategy}).take(10).map(s => s.toString + "\n" + s.info + "\n")
   }
 
   // Convert prices (premium, strike, whatever) from a single option to the option purchase block size values
