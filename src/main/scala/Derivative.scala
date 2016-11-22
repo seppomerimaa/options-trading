@@ -1,7 +1,5 @@
 import scala.math._
-/**
- * Created by McFly on 7/5/15.
- */
+
 trait Derivative {
   val strike: Long
   val premium: Long

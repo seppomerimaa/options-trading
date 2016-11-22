@@ -1,13 +1,12 @@
 import scala.io.StdIn
-/**
- * Created by McFly on 7/8/15.
- */
 object StrategyApp extends App{
   val stocksAndChains = Map("NBG" -> "NBG.txt", "GREK" -> "GREK.txt")
 
   var stock = "" // I ain't sorry
   while (!stocksAndChains.contains(stock)) {
-    stock = StdIn.readLine("What stock are you interested in? ")
+    println("What stock are you interested in?")
+    println("Your options are: NBG, GREK")
+    stock = StdIn.readLine("> ")
   }
 
   var budget = -1.0

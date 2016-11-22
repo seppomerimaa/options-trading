@@ -1,4 +1,5 @@
 import scala.math._
+
 /**
  * Various Strategy classes, etc.
  */
